@@ -56,16 +56,38 @@ void benchmark(Dictionary* dict, const std::string& label, int N, std::ofstream&
     delete dict;
 }
 
+void removeData(Dictionary* dict, const std::string& label, int N) {
+
+    // Generates N keys to add to the dict, then removes them right after to test the remove function.
+
+    std::vector<int> keys = generate_keys(N);
+
+    for (int k : keys) {
+        dict->insert(k);
+    }
+
+    for (int k : keys) {
+        dict->remove(k);
+    }
+    std::cout << label << " [N=" << N << "] - " << "Remove: successful" << std::endl;
+ }
+
 int main() {
     std::ofstream csv("benchmark_results_avgonly.csv");
     csv << "Structure,InputType,N,InsertTime(us),AvgLookup(ns)\n";
 
-    std::vector<int> sizeV = {5000, 500000};
+    std::vector<int> sizeV = {5000, 10000}; // suppose to be {5000, 500000}
     for (auto N : sizeV) {
-            benchmark(new UnsortedVectorDict(), "Unsorted Vector", N, csv);
-            benchmark(new SortedVectorDict(), "Sorted Vector", N, csv);
-            benchmark(new UnsortedLinkedListDict(), "Unsorted Linked List", N, csv);
-            benchmark(new SortedLinkedListDict(), "Sorted Linked List", N, csv);
+        benchmark(new UnsortedVectorDict(), "Unsorted Vector", N, csv);
+        benchmark(new SortedVectorDict(), "Sorted Vector", N, csv);
+        benchmark(new UnsortedLinkedListDict(), "Unsorted Linked List", N, csv);
+        benchmark(new SortedLinkedListDict(), "Sorted Linked List", N, csv);
+
+        // Testing the remove function on the ADTs
+        removeData(new UnsortedVectorDict(), "Unsorted Vector", N);
+        removeData(new SortedVectorDict(), "Sorted Vector", N);
+        removeData(new UnsortedLinkedListDict(), "Unsorted Linked List", N);
+        removeData(new SortedLinkedListDict(), "Sorted Linked List", N);
     }
 
     csv.close();

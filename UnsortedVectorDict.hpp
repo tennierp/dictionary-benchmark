@@ -10,10 +10,10 @@
 
 class UnsortedVectorDict : public Dictionary {
 
-    public:
-        void insert(int) override;
-        [[nodiscard]] bool lookup(int) const override;
-        void remove(int) override;
+public:
+    void insert(int) override;
+    [[nodiscard]] bool lookup(int) const override;
+    void remove(int) override;
 
 private:
     std::vector<int> data;
