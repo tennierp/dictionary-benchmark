@@ -7,6 +7,7 @@ void SortedLinkedListDict::insert(int key) {
 
     Node* keyNode = new Node;
     keyNode->data = key;
+    keyNode->next = nullptr;
 
     if (head == nullptr || head->data >= key) {
         keyNode->next = head;

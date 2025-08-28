@@ -6,6 +6,7 @@ void UnsortedLinkedListDict::insert(int key) {
 
     Node* keyNode = new Node;
     keyNode->data = key;
+    keyNode->next = nullptr;
 
     if (head == nullptr) {
         head = keyNode;
@@ -37,9 +38,16 @@ bool UnsortedLinkedListDict::lookup(int key) const {
 }
 void UnsortedLinkedListDict::remove(int key) {
 
-    // Scans through the linked list, if the key is found, it sets the prev node to the current nodes next, and then removes the key node.
+    // Scans through the linked list, if the key is found, it sets the prev node to the current nodes next, and then deletes the key node.
 
     if (head == nullptr) {
+        return;
+    }
+
+    if (head->data == key) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
         return;
     }
 
